@@ -67,7 +67,11 @@
           <li class="header">HEADER</li>
           <!-- Optionally, you can add icons to the links -->
           <li class="active">
-            <a href="{{route('home')}}"><i class="fa fa-link"></i> <span>Student Management</span></a>
+            <a href="{{route('student.index')}}"><i class="fa fa-link"></i> <span>Students</span></a>
+          </li>
+
+          <li class="active">
+            <a href="{{route('student.create')}}"><i class="fa fa-link"></i> <span>Create Student</span></a>
           </li>
         </ul>
         <!-- /.sidebar-menu -->

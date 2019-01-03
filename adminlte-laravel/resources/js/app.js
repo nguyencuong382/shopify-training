@@ -23,7 +23,6 @@ import VeeValidate from 'vee-validate';
 
 Vue.use(VeeValidate);
 
-Vue.component('students', require('./components/ListStudents.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -31,5 +30,5 @@ Vue.component('students', require('./components/ListStudents.vue').default);
  */
 
 const app = new Vue({
-    el: '#app'
+    // el: '#app'
 });

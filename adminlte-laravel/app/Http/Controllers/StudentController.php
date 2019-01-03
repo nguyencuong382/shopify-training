@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Student as StudentResource;
-use Illuminate\Support\Facades\DB;
 use App\Student;
 use Illuminate\Http\Request;
 
@@ -16,9 +14,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        // $page = $request->input("currentId") ? $request->input("currentId"): -1;
-        $students = Student::paginate(10);
-        return StudentResource::collection($students);
+        $students = Student::all();
+        return view('student.index', compact('students'));
     }
 
     /**
@@ -28,7 +25,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('student.create');
     }
 
     /**
@@ -42,7 +39,7 @@ class StudentController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:students',
         ]);
 
         $student = new Student;
@@ -52,7 +49,7 @@ class StudentController extends Controller
         $student->email = $request->get('email');
 
         if ($student->save()) {
-            return new StudentResource($student);
+            return redirect('/student')->with('success', 'Student has been added');
         }
 
     }
@@ -74,9 +71,11 @@ class StudentController extends Controller
      * @param  \App\student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(student $student)
+    public function edit($id)
     {
         //
+        $student = Student::find($id);
+        return view('student.edit', compact('student'));
     }
 
     /**
@@ -91,7 +90,7 @@ class StudentController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:students',
         ]);
         $student = Student::findOrFail($id);
         $student->first_name = $request->get('first_name');
@@ -99,7 +98,7 @@ class StudentController extends Controller
         $student->email = $request->get('email');
 
         if ($student->save()) {
-            return new StudentResource($student);
+            return redirect('/student')->with('success', 'Student has been edited');
         }
     }
 
@@ -114,7 +113,7 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
 
         if ($student->delete()) {
-            return new StudentResource($student);
+            return redirect('/student')->with('success', 'Student has been deleted');
         }
     }
 }
