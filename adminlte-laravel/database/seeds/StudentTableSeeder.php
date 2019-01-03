@@ -28,6 +28,6 @@ class StudentTableSeeder extends Seeder
       //   $st->save();
       // }
 
-      factory(Student::class, 10)->create();
+      factory(Student::class, 25)->create();
     }
 }

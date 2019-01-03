@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Student as StudentResource;
+use Illuminate\Support\Facades\DB;
 use App\Student;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::paginate(14);
+        // $page = $request->input("currentId") ? $request->input("currentId"): -1;
+        $students = Student::paginate(10);
         return StudentResource::collection($students);
     }
 
@@ -111,8 +113,8 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail($id);
 
-        if($student->delete()) {
-          return new StudentResource($student);
+        if ($student->delete()) {
+            return new StudentResource($student);
         }
     }
 }

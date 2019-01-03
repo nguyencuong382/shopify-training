@@ -1,6 +1,20 @@
 <template>
-  <div class="container">
+  <div class>
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#modal-add-student"
+    >Add more student</button>
+
     <pulse-loader :loading="loading" :color="color" :size="'20px'"></pulse-loader>
+    <br>
+    <div class="pagination">
+      <button class="btn btn-warning" @click="prevPage" v-bind:disabled="disablePrev">Prev</button>
+      <button class="btn btn-info btn-page"  v-for="page in pages" :key="page" @click="goToPage(page)">{{page}}</button>
+      <button class="btn btn-warning" @click="nextPage" v-bind:disabled="disableNext">Next</button>
+    </div>
+
     <div class="table-responsive">
       <table class="table no-margin">
         <thead>
@@ -50,7 +64,14 @@
                 <p class="err" v-if="errors.has('last name')">{{errors.first('last name')}}</p>
               </td>
               <td>
-                <input type="text" class="form-control" v-model="newStudent.email" name="email">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="newStudent.email"
+                  name="email"
+                  v-validate="'required|email'"
+                >
+                <p class="err" v-if="errors.has('email')">{{errors.first('email')}}</p>
               </td>
               <td>
                 <button class="btn btn-primary" v-on:click="updateStudent()">Update</button>
@@ -62,6 +83,62 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div id="modal-add-student" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add student</h4>
+          </div>
+          <form @submit.prevent="addStudent">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="first_name">First name :</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="first_name"
+                  placeholder="Enter first name"
+                  v-model="newStudent.first_name"
+                  v-validate.initial="'required|min:2'"
+                >
+                <p class="err" v-if="errors.has('first_name')">{{errors.first('first_name')}}</p>
+              </div>
+              <div class="form-group">
+                <label for="last_name">Last name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="last_name"
+                  placeholder="Enter last name"
+                  v-model="newStudent.last_name"
+                  v-validate="'required'"
+                >
+                <p class="err" v-if="errors.has('last_name')">{{errors.first('last_name')}}</p>
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="email"
+                  placeholder="Enter email"
+                  v-model="newStudent.email"
+                  v-validate="'required|email'"
+                >
+                <p class="err" v-if="errors.has('email')">{{errors.first('email')}}</p>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-default">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -79,6 +156,13 @@ export default {
       loading: false,
       color: "#42BF94",
       students: [],
+      errors_: [],
+      prev: "",
+      next: "",
+      pages: [],
+      currentPage: 1,
+      disablePrev: true,
+      disableNext: true,
       newStudent: {
         id: "",
         first_name: "",
@@ -117,13 +201,47 @@ export default {
   },
 
   methods: {
-    fetchStudents() {
+    fetchStudents(page = 1) {
       this.api.axios_
-        .get("students")
+        .get("students?page=" + page)
         .then(res => res.data)
         .then(res => {
+          console.log(res);
           this.students = res.data;
+          this.currentPage = res.meta.current_page;
+
+          this.disablePrev = res.meta.current_page === 1;
+          this.disableNext = res.meta.current_page === res.meta.last_page;
+
+          this.pages = [];
+
+          for(var i = 1; i <= res.meta.last_page; i++) {
+            this.pages.push(i);
+          }
         });
+    },
+
+    addStudent() {
+      this.api.axios_
+        .post("student", this.newStudent)
+        .then(res => res.data)
+        .then(res => {
+          this.students.push(res.data);
+          $("#modal-add-student").modal("hide");
+        })
+        .catch();
+    },
+
+    prevPage() {
+      this.fetchStudents(this.currentPage - 1);
+    },
+
+    nextPage() {
+      this.fetchStudents(this.currentPage + 1);
+    },
+
+    goToPage(page) {
+      this.fetchStudents(page);
     },
 
     editStudent(student) {
@@ -183,6 +301,18 @@ export default {
 
 .v-spinner {
   text-align: center;
+}
+
+.err {
+  color: tomato;
+}
+
+.table {
+  background-color: white;
+}
+
+.btn-page {
+  margin: 5px;
 }
 </style>
 

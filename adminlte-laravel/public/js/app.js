@@ -1931,6 +1931,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1943,6 +2020,13 @@ __webpack_require__.r(__webpack_exports__);
       loading: false,
       color: "#42BF94",
       students: [],
+      errors_: [],
+      prev: "",
+      next: "",
+      pages: [],
+      currentPage: 1,
+      disablePrev: true,
+      disableNext: true,
       newStudent: {
         id: "",
         first_name: "",
@@ -1973,10 +2057,38 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
-    fetchStudents() {
-      this.api.axios_.get("students").then(res => res.data).then(res => {
+    fetchStudents(page = 1) {
+      this.api.axios_.get("students?page=" + page).then(res => res.data).then(res => {
+        console.log(res);
         this.students = res.data;
+        this.currentPage = res.meta.current_page;
+        this.disablePrev = res.meta.current_page === 1;
+        this.disableNext = res.meta.current_page === res.meta.last_page;
+        this.pages = [];
+
+        for (var i = 1; i <= res.meta.last_page; i++) {
+          this.pages.push(i);
+        }
       });
+    },
+
+    addStudent() {
+      this.api.axios_.post("student", this.newStudent).then(res => res.data).then(res => {
+        this.students.push(res.data);
+        $("#modal-add-student").modal("hide");
+      }).catch();
+    },
+
+    prevPage() {
+      this.fetchStudents(this.currentPage - 1);
+    },
+
+    nextPage() {
+      this.fetchStudents(this.currentPage + 1);
+    },
+
+    goToPage(page) {
+      this.fetchStudents(page);
     },
 
     editStudent(student) {
@@ -4570,7 +4682,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.v-spinner[data-v-030cb541],\n.container[data-v-030cb541] {\n  width: 100%;\n  height: 100%;\n}\n.v-spinner[data-v-030cb541] {\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.v-spinner[data-v-030cb541],\n.container[data-v-030cb541] {\n  width: 100%;\n  height: 100%;\n}\n.v-spinner[data-v-030cb541] {\n  text-align: center;\n}\n.err[data-v-030cb541] {\n  color: tomato;\n}\n.table[data-v-030cb541] {\n  background-color: white;\n}\n.btn-page[data-v-030cb541] {\n  margin: 5px;\n}\n", ""]);
 
 // exports
 
@@ -44132,11 +44244,69 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
+    {},
     [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#modal-add-student"
+          }
+        },
+        [_vm._v("Add more student")]
+      ),
+      _vm._v(" "),
       _c("pulse-loader", {
         attrs: { loading: _vm.loading, color: _vm.color, size: "20px" }
       }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "pagination" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning",
+              attrs: { disabled: _vm.disablePrev },
+              on: { click: _vm.prevPage }
+            },
+            [_vm._v("Prev")]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.pages, function(page) {
+            return _c(
+              "button",
+              {
+                key: page,
+                staticClass: "btn btn-info btn-page",
+                on: {
+                  click: function($event) {
+                    _vm.goToPage(page)
+                  }
+                }
+              },
+              [_vm._v(_vm._s(page))]
+            )
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning",
+              attrs: { disabled: _vm.disableNext },
+              on: { click: _vm.nextPage }
+            },
+            [_vm._v("Next")]
+          )
+        ],
+        2
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table no-margin" }, [
@@ -44287,6 +44457,12 @@ var render = function() {
                                 rawName: "v-model",
                                 value: _vm.newStudent.email,
                                 expression: "newStudent.email"
+                              },
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required|email",
+                                expression: "'required|email'"
                               }
                             ],
                             staticClass: "form-control",
@@ -44304,7 +44480,13 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.has("email")
+                            ? _c("p", { staticClass: "err" }, [
+                                _vm._v(_vm._s(_vm.errors.first("email")))
+                              ])
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("td", [
@@ -44344,7 +44526,184 @@ var render = function() {
             0
           )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: { id: "modal-add-student", role: "dialog" }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addStudent($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "first_name" } }, [
+                        _vm._v("First name :")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newStudent.first_name,
+                            expression: "newStudent.first_name"
+                          },
+                          {
+                            name: "validate",
+                            rawName: "v-validate.initial",
+                            value: "required|min:2",
+                            expression: "'required|min:2'",
+                            modifiers: { initial: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "first_name",
+                          placeholder: "Enter first name"
+                        },
+                        domProps: { value: _vm.newStudent.first_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newStudent,
+                              "first_name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.has("first_name")
+                        ? _c("p", { staticClass: "err" }, [
+                            _vm._v(_vm._s(_vm.errors.first("first_name")))
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "last_name" } }, [
+                        _vm._v("Last name:")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newStudent.last_name,
+                            expression: "newStudent.last_name"
+                          },
+                          {
+                            name: "validate",
+                            rawName: "v-validate",
+                            value: "required",
+                            expression: "'required'"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "last_name",
+                          placeholder: "Enter last name"
+                        },
+                        domProps: { value: _vm.newStudent.last_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newStudent,
+                              "last_name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.has("last_name")
+                        ? _c("p", { staticClass: "err" }, [
+                            _vm._v(_vm._s(_vm.errors.first("last_name")))
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v("Email:")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newStudent.email,
+                            expression: "newStudent.email"
+                          },
+                          {
+                            name: "validate",
+                            rawName: "v-validate",
+                            value: "required|email",
+                            expression: "'required|email'"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "email",
+                          placeholder: "Enter email"
+                        },
+                        domProps: { value: _vm.newStudent.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newStudent,
+                              "email",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.has("email")
+                        ? _c("p", { staticClass: "err" }, [
+                            _vm._v(_vm._s(_vm.errors.first("email")))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ]
+              )
+            ])
+          ])
+        ]
+      )
     ],
     1
   )
@@ -44366,6 +44725,35 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Add student")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-default", attrs: { type: "submit" } },
+        [_vm._v("Add")]
+      )
     ])
   }
 ]
@@ -56177,8 +56565,8 @@ function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\adminlte-laravel\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\adminlte-laravel\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\laravel-basic\adminlte-laravel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\laravel-basic\adminlte-laravel\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
