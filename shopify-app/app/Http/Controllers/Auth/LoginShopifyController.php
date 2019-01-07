@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Auth;
-use App\User;
-use Socialite;
 use App\Store;
+use App\User;
 use App\UserProvider;
+use Auth;
 use Illuminate\Http\Request;
+use Socialite;
 
 class LoginShopifyController extends Controller
 {
@@ -21,7 +21,7 @@ class LoginShopifyController extends Controller
     {
 
         $this->validate($request, [
-            'domain' => 'string|required'
+            'domain' => 'string|required',
         ]);
 
         $config = new \SocialiteProviders\Manager\Config(
@@ -33,7 +33,7 @@ class LoginShopifyController extends Controller
 
         return Socialite::with('shopify')
             ->setConfig($config)
-            ->scopes(['read_products','write_products'])
+            ->scopes(['read_products', 'write_products'])
             ->redirect();
 
     }

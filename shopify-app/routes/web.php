@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Log;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +25,7 @@ Route::get('login/shopify/callback', 'Auth\LoginShopifyController@handleProvider
 
 Route::get('/store/{storeId}', function() {
     // Display the store dashboard
+    Log::channel('single')->info('Something happened!'); 
 })->middleware(['auth', 'subscribed']);
 
 Route::get('stores/{storeId}/shopify/subscribe', function(\Illuminate\Http\Request $request, $storeId) {
