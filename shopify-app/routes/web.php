@@ -25,7 +25,7 @@ Route::get('login/shopify/callback', 'Auth\LoginShopifyController@handleProvider
 
 Route::get('/store/{storeId}', function() {
     // Display the store dashboard
-    Log::channel('single')->info('Something happened!'); 
+    // Log::channel('single')->info('Something happened!'); 
 })->middleware(['auth', 'subscribed']);
 
 Route::get('stores/{storeId}/shopify/subscribe', function(\Illuminate\Http\Request $request, $storeId) {
@@ -56,3 +56,19 @@ Route::get('stores/{storeId}/shopify/subscribe', function(\Illuminate\Http\Reque
 
 Route::get('/oauth/authorize', 'ProductController@getResponse');
 Route::get('/shopify', 'ProductController@getPermission');
+
+Route::post('webhook/shopify/order-created', function(\Illuminate\Http\Request $request) {
+    // Handle order created
+})->middleware('webhook');
+
+Route::post('webhook/shopify/uninstall', function(\Illuminate\Http\Request $request) {
+    // Handle app uninstall
+})->middleware('webhook');
+
+Route::post('webhook/shopify/gdpr/customer-redact', function(\Illuminate\Http\Request $request) {
+    // Remove customer data
+})->middleware('auth.webhook');
+
+Route::post('webhook/shopify/gdpr/shop-redact', function(\Illuminate\Http\Request $request) {
+    // Remove shop data
+})->middleware('webhook');
