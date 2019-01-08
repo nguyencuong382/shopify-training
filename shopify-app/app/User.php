@@ -2,9 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -42,5 +41,10 @@ class User extends Authenticatable
     public function providers()
     {
         return $this->hasMany('App\UserProvider');
+    }
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = \Hash::make($password);
     }
 }
