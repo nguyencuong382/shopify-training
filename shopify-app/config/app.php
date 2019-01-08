@@ -174,7 +174,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -229,7 +229,6 @@ return [
 
         'Shopify' => BNMetrics\Shopify\Facade\ShopifyFacade::class,
         'ShopifyBilling' => BNMetrics\Shopify\Facade\BillingFacade::class,
-
     ],
 
 ];

@@ -14,6 +14,8 @@
         "laravel/framework": "5.7.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0",
+        "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "~3.0",
         "socialiteproviders/shopify": "^1.0"
     },
     "require-dev": {

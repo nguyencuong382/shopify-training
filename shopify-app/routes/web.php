@@ -11,7 +11,7 @@
 |
 */
 use Illuminate\Support\Facades\Log;
-
+use App\Events\TestBroadcast;
 
 Route::get('/', function () {
   info('Some helpful information!');
@@ -45,3 +45,11 @@ Route::post('webhook/shopify/gdpr/customer-redact', function(\Illuminate\Http\Re
 Route::post('webhook/shopify/gdpr/shop-redact', function(\Illuminate\Http\Request $request) {
     // Remove shop data
 })->middleware('webhook');
+
+Route::get('event', function() {
+    event(new TestBroadcast("How are  you!"));
+});
+
+Route::get('listen', function() {
+    return view('listenBroadcast');
+});
