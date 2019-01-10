@@ -26,6 +26,7 @@
     },
     "devDependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "@babel/preset-react": "^7.0.0",
         "axios": "^0.18",
         "babel-preset-react": "^6.23.0",
@@ -45,6 +46,8 @@
         "@shopify/polaris": "^3.3.0"
     }
 =======
+=======
+>>>>>>> 854cd18662edcfa59b956d4c29b5564ee6ee0cd4
         "babel-preset-react": "^6.23.0",
         "font-awesome": "^4.7.0",
         "react": "^16.2.0",
@@ -57,5 +60,8 @@
     },
     "author": "Adelekan David",
     "license": "ISC"
+<<<<<<< HEAD
+>>>>>>> 854cd18662edcfa59b956d4c29b5564ee6ee0cd4
+=======
 >>>>>>> 854cd18662edcfa59b956d4c29b5564ee6ee0cd4
 }

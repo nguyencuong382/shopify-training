@@ -14,7 +14,11 @@ require('./bootstrap');
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 require('./components/Root');
+=======
+require('./components/Example');
+>>>>>>> 854cd18662edcfa59b956d4c29b5564ee6ee0cd4
 =======
 require('./components/Example');
 >>>>>>> 854cd18662edcfa59b956d4c29b5564ee6ee0cd4
