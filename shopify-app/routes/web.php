@@ -10,17 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use Illuminate\Support\Facades\Log;
 use App\Events\TestBroadcast;
 
 Route::get('/', function () {
-  info('Some helpful information!');
+    //info('Some helpful information!');
     return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'HomeController@admin')->name('admin');
 Route::get('login/shopify', 'Auth\LoginShopifyController@redirectToProvider')->name('login.shopify');
 Route::get('login/shopify/callback', 'Auth\LoginShopifyController@handleProviderCallback');
 
@@ -31,11 +33,12 @@ Route::get('/oauth/authorize', 'ProductController@getResponse');
 Route::get('/shopify', 'ProductController@getPermission');
 
 Route::post('webhook/shopify/order-created', function(\Illuminate\Http\Request $request) {
-    // Handle order created
+  Log::info('An product have created');
 })->middleware('webhook');
 
 Route::post('webhook/shopify/uninstall', function(\Illuminate\Http\Request $request) {
     // Handle app uninstall
+    Log::info('An store have uninstalled the app');
 })->middleware('webhook');
 
 Route::post('webhook/shopify/gdpr/customer-redact', function(\Illuminate\Http\Request $request) {
@@ -52,4 +55,9 @@ Route::get('event', function() {
 
 Route::get('listen', function() {
     return view('listenBroadcast');
+});
+
+
+Route::get('polar', function() {
+  Log::info('asd');
 });

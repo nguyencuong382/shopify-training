@@ -40,6 +40,6 @@ class ShopifySubcribeController extends Controller
             'trial_ends_at' => array_get($response, 'trial_ends_on'),
         ]);
 
-        return redirect('/home');
+        return redirect('/admin');
     }
 }
