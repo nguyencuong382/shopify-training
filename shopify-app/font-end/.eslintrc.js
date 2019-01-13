@@ -45,7 +45,9 @@ module.exports = {
         "eqeqeq":  [
           "warn"
         ],
-        "react/prefer-stateless-function": "off"
+        "react/prefer-stateless-function": "off",
+        'react/button-has-type': 'off',
+        'import/prefer-default-export': 'off',
     },
     "settings": {
         "import/resolver": {

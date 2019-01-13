@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
-import './scss/app.scss';
-import Admin from './Admin';
-
+// import './scss/app.scss';
+// import Admin from './Admin';
+import { connect } from 'react-redux';
+// <button onClick={this.props.loadBundles}>Fetch</button>
 class App extends Component {
   render() {
     return (
       <div>
-        <Admin />
+        <button onClick={this.props.loadBundles}>Fetch</button>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+
+};
+
+const mapDispatchToProps = dispatch => ({
+  loadBundles: () => dispatch({ type: 'FETCH_ALL_BUNDLES_SAGA' }),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(App);

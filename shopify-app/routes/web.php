@@ -11,18 +11,18 @@
 |
 */
 
+include_once 'bundles.php';
+
 use Illuminate\Support\Facades\Log;
 use App\Events\TestBroadcast;
 
-Route::get('/', function () {
-    //info('Some helpful information!');
-    return view('welcome');
-});
+Route::get('/',  'HomeController@index')->name('first');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin', 'HomeController@admin')->name('admin');
+Route::get('/admin', 'HomeController@admin')->name('admin')->middleware(['auth']);
+
 Route::get('login/shopify', 'Auth\LoginShopifyController@redirectToProvider')->name('login.shopify');
 Route::get('login/shopify/callback', 'Auth\LoginShopifyController@handleProviderCallback');
 
