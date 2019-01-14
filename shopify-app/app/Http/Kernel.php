@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'subscribed' => \App\Http\Middleware\VerifyStoreIsSubscribed::class,
         'webhook' => \App\Http\Middleware\VerifyWebhook::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 
     /**

@@ -7,17 +7,19 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
+const dest = '../public';
+
 module.exports = {
-  entry: {
-    main: './src/index.js',
-  },
+  entry: [
+    'babel-polyfill', './src/index.js',
+  ],
   output: {
-    path: path.resolve(__dirname, '../public'),
+    path: path.resolve(__dirname, dest),
     filename: 'js/app_react.js',
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './../public',
+    contentBase: dest,
     open: true,
     hot: true,
   },
@@ -28,6 +30,9 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          query: {
+            presets:[ 'es2015', 'react', 'stage-2' ]
+          }
         },
       },
       {

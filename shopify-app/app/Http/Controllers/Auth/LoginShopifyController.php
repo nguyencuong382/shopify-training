@@ -48,12 +48,19 @@ class LoginShopifyController extends Controller
 
         $shopifyUser = Socialite::driver('shopify')->user();
 
+        $user = User::where([
+            ['name', $shopifyUser->name],
+            ['email', $shopifyUser->email],
+        ])->first();
+
         // Create user
-        $user = User::firstOrCreate([
-            'name' => $shopifyUser->name,
-            'email' => $shopifyUser->email,
-            'password' => '',
-        ]);
+        if (!$user) {
+            $user = User::firstOrCreate([
+                'name' => $shopifyUser->name,
+                'email' => $shopifyUser->email,
+                'password' => '',
+            ]);
+        }
 
         // Store the OAuth Identity
         UserProvider::firstOrCreate([
@@ -77,7 +84,7 @@ class LoginShopifyController extends Controller
 
         dispatch(new \App\Jobs\RegisterUninstallShopifyWebhook($store->domain, $shopifyUser->token, $store));
 
-        return redirect('/admin');
+        return redirect('/');
 
     }
 }

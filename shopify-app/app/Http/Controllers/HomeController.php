@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -23,7 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // if ($user = Auth::user()) {
+        //     return $this->admin();
+        // }
+        return $this->admin();
+        // return view('welcome');
     }
 
     /**
@@ -33,6 +37,6 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('admin');
+        return view('admin.product_bundles');
     }
 }
