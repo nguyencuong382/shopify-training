@@ -1,3 +1,39 @@
-p {
-  font-size: 15px;
+.content-wrapper {
+    height: 100% !important;
+
+    #root {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    .overlay {
+      height: 100%;
+      text-align: center;
+      font-size: 30px;
+    }
+}
+
+.w {
+
+  &-100 {
+    width: 100px!important;
+  }
+
+  &-150 {
+    width: 150px;
+  }
+
+  &-200 {
+    width: 200px;
+  }
+
+
+}
+
+.row-bundles-table {
+  &:hover {
+    background-color: lightgray!important;
+    cursor: pointer;
+  }
 }

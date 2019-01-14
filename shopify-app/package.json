@@ -24,6 +24,9 @@
         "vue-template-compiler": "^2.5.21"
     },
     "dependencies": {
-        "admin-lte": "^2.4.8"
+        "admin-lte": "^2.4.8",
+        "prop-types": "^15.6.2",
+        "react-dropdown": "^1.6.3",
+        "react-ios-switch": "^0.1.19"
     }
 }

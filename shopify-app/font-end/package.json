@@ -48,6 +48,7 @@
     "pusher-js": "^4.3.1",
     "react": "^16.7.0",
     "react-dom": "^16.4.1",
+    "react-ios-switch": "^0.1.19",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",

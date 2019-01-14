@@ -240,12 +240,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
-      <div class="box">
-        <div class="overlay">
-          <i class="fa fa-refresh fa-spin"></i>
-        </div>
-      </div>
-      
+   
       @yield('content')
       <!-- /.content -->
 
@@ -340,7 +335,7 @@
   </div>
 
 
-  <script src="{{asset('js/app.js')}}"></script>
+  {{-- <script src="{{asset('js/app.js')}}"></script> --}}
 </body>
 
 </html>

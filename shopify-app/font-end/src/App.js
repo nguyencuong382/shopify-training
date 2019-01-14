@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 // import Admin from './Admin';
 import { connect } from 'react-redux';
 // <button onClick={this.props.loadBundles}>Fetch</button>
+import ProductBundle from './pages/product-bundles';
+
 class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.props.loadBundles}>Fetch</button>
+        <ProductBundle />
       </div>
     );
   }

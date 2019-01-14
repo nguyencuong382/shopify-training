@@ -48,6 +48,9 @@ module.exports = {
         "react/prefer-stateless-function": "off",
         'react/button-has-type': 'off',
         'import/prefer-default-export': 'off',
+        'react/jsx-one-expression-per-line': 'off',
+        'jsx-a11y/label-has-associated-control': 'off',
+        'jsx-a11y/label-has-for': 'off',
     },
     "settings": {
         "import/resolver": {
