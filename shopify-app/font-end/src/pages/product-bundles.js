@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import BundlesTable from './bundles-table';
 
-export default class ProductBundle extends Component {
+export class ProductBundle extends Component {
   render() {
     return (
       <BundlesTable />
     );
   }
 }
+
+export default ProductBundle;

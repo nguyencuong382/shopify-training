@@ -8,7 +8,7 @@ export default class RowBundlesTable extends Component {
 
     this.state = {
       checked: false,
-      active: true,
+      active: false,
     };
   }
 

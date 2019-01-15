@@ -51,6 +51,12 @@ module.exports = {
         'react/jsx-one-expression-per-line': 'off',
         'jsx-a11y/label-has-associated-control': 'off',
         'jsx-a11y/label-has-for': 'off',
+        'react/destructuring-assignment': [
+          'warn',
+        ],
+        'react/no-access-state-in-setstate': [
+          'warn',
+        ],
     },
     "settings": {
         "import/resolver": {

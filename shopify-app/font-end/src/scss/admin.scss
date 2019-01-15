@@ -37,3 +37,12 @@
     cursor: pointer;
   }
 }
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+
+  .action_bundles {
+    display: inline-flex;
+  }
+}

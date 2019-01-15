@@ -23,11 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // if ($user = Auth::user()) {
-        //     return $this->admin();
-        // }
-        return $this->admin();
-        // return view('welcome');
+        if ($user = Auth::user()) {
+            return $this->admin();
+        }
+        // return $this->admin();
+        return view('welcome');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 
 class VerifyWebhook
 {
@@ -15,6 +16,7 @@ class VerifyWebhook
      */
     public function handle($request, Closure $next)
     {
+        Log::debug("webhook go here!");
         $hmac = request()->header('x-shopify-hmac-sha256') ?: '';
         $shop = request()->header('x-shopify-shop-domain');
         $data = request()->getContent();
