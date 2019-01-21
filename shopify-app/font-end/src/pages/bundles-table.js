@@ -65,7 +65,10 @@ export class BundlesTable extends Component {
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
-                <RowBundlesTable />
+                {this.props.bundles.map((item, index) => (
+                  <RowBundlesTable key={{ index }} data={{ item }} />
+                ))}
+
               </tbody>
             </table>
           </div>

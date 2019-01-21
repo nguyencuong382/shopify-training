@@ -8,7 +8,7 @@ export default class RowBundlesTable extends Component {
 
     this.state = {
       checked: false,
-      active: false,
+      active: this.props.data.actived,
     };
   }
 
@@ -29,6 +29,8 @@ export default class RowBundlesTable extends Component {
       <Button onClick={this.togglePopover}>More actions</Button>
     );
 
+    const { data } = this.props.data;
+
     return (
       <tr className="row-bundles-table">
         <td>
@@ -41,19 +43,19 @@ export default class RowBundlesTable extends Component {
         </td>
         <td>
           <div className="stat">
-            <p className="stat__value">1</p>
+            <p className="stat__value">{data.visitors}</p>
             <p className="stat__type">VISITORS</p>
           </div>
         </td>
         <td>
           <div className="stat">
-            <p className="stat__value">1</p>
+            <p className="stat__value">{data.add_to_cart}</p>
             <p className="stat__type">ADD TO CART</p>
           </div>
         </td>
         <td>
           <div className="stat">
-            <p className="stat__value">1</p>
+            <p className="stat__value">{data.sales}</p>
             <p className="stat__type">SALES</p>
           </div>
         </td>
